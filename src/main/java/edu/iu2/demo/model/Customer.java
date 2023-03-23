@@ -1,10 +1,15 @@
 package edu.iu2.demo.model;
 
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Objects;
 
 public class Customer {
     //specify customer attributes
     private int id;
+    //add annotations to ensure value not null
+    //comes from validation package we added (in pom file)
+    @NotEmpty(message = "name must not be empty.")
     private String name;
     private String email;
 

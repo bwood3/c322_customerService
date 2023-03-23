@@ -1,6 +1,8 @@
 package edu.iu2.demo.controller;
 
 import edu.iu2.demo.model.Customer;
+import edu.iu2.demo.repository.CustomerRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,17 +13,48 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
+    //make reference of repository
+    private CustomerRepository repository;
+
+    //Spring is creating our object -> Spring knows to create object of this class because we annotated as @RestController
+    // -> this is aspect oriented programming (we are adding code to spring through annotations)
+    //Problem: every time "new" keyword added we are binding code -> a dependency is added (however we want -
+    // - to code to interfaces and avoid binding -> we want inversion of control)
+    //Spring has dependency injection to create the object, but we need to tell the framework we want an instance of the Customer-
+    //-Repository class -> by adding argument Spring will know to add (we do this by adding @Repository in CustomerRepository.java)
+    public CustomerController(CustomerRepository repository) {
+        this.repository = repository;
+    }
+
     //Get localhost:8080/customers <-will execute following code
     @GetMapping
     public List<Customer> findAll(){
-        return null;
+        return repository.findAll();
     }
 
     //http post request comes to application
     //we want to look in body -> so add requestBody
+
+    //we must tell spring to validate customer information (see Customer class <- using validation package)
     @PostMapping
-    public int create(@RequestBody Customer customer)
+    public int create(@Valid @RequestBody Customer customer)
     {
-        return 0;
+        return repository.create(customer);
+    }
+
+    //add update method -> we want a PUT localhost:8080/customers/"ID#" request to be handeled by this method
+    //customer is in body but ID is in the path -> let Spring know
+    //add ID to mapping -> "/{id}"
+    @PutMapping("/{id}")
+    public void update(@RequestBody Customer customer, @PathVariable int id)
+    {
+        repository.update(customer, id);
+    }
+
+    //annotated delete command for spring and tell spring where to look for variable with @PathVariable
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id)
+    {
+        repository.delete(id);
     }
 }
