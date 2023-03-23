@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - demo-customerservice-bryanwood
+name: Build and deploy JAR app to Azure Web App - demo-customerservice-BryanWood
 
 on:
   push:
@@ -47,7 +47,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'demo-customerservice-bryanwood'
+          app-name: 'demo-customerservice-BryanWood'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9D3BC31D14D848F3AA8E23A97555AEC0 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_36B2ACDB6A8B4DB79D75E3B30D120B78 }}
           package: '*.jar'
