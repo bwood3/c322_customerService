@@ -32,6 +32,12 @@ public class CustomerController {
         return repository.findAll();
     }
 
+    //find by ID added
+    //map url to ID added to GetMapping argument
+    @GetMapping("/{id}")
+    public Customer findByID(@PathVariable int id){return repository.getCustomerByID(id);}
+
+
     //http post request comes to application
     //we want to look in body -> so add requestBody
 
