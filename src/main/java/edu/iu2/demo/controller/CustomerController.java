@@ -2,16 +2,17 @@ package edu.iu2.demo.controller;
 
 import edu.iu2.demo.model.Customer;
 import edu.iu2.demo.repository.CustomerRepository;
+import edu.iu2.demo.repository.InMemoryCustomerRepository;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 //tell framework this is a controller
 @RestController
 //distinguish between request with specified url
 @RequestMapping("/customers")
-public class CustomerController {
+public class CustomerController{
 
     //make reference of repository
     private CustomerRepository repository;
@@ -36,25 +37,33 @@ public class CustomerController {
     //we want to look in body -> so add requestBody
 
     //we must tell spring to validate customer information (see Customer class <- using validation package)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping
     public int create(@Valid @RequestBody Customer customer)
     {
-        return repository.create(customer);
+        Customer newCustomer= repository.save(customer);
+        return newCustomer.getId();
     }
 
     //add update method -> we want a PUT localhost:8080/customers/"ID#" request to be handeled by this method
     //customer is in body but ID is in the path -> let Spring know
     //add ID to mapping -> "/{id}"
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void update(@RequestBody Customer customer, @PathVariable int id)
     {
-        repository.update(customer, id);
+        customer.setId(id);
+        repository.save(customer);
     }
 
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     //annotated delete command for spring and tell spring where to look for variable with @PathVariable
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id)
     {
-        repository.delete(id);
+        Customer customer = new Customer();
+        customer.setId(id);
+        repository.delete(customer);
     }
 }

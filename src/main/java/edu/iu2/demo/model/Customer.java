@@ -1,10 +1,19 @@
 package edu.iu2.demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
+import jdk.jfr.Enabled;
 
 import java.util.Objects;
 
+@Entity
 public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     //specify customer attributes
     private int id;
     //add annotations to ensure value not null
