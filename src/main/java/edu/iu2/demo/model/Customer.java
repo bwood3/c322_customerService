@@ -1,16 +1,14 @@
 package edu.iu2.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-//import javax.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jdk.jfr.Enabled;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.util.Objects;
 
 @Entity
+@DynamicInsert
+@Table(name = "Customer")
 public class Customer {
 
     @Id
@@ -50,10 +48,13 @@ public class Customer {
     //hash code to compare customer objects
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == this)
+            return true;
+        if (!(o instanceof Customer)) {
+            return false;
+        }
         Customer customer = (Customer) o;
-        return id == customer.id && name.equals(customer.name) && email.equals(customer.email);
+        return id == customer.id && Objects.equals(name, customer.name) && Objects.equals(email, customer.email);
     }
 
     @Override
