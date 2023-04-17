@@ -5,44 +5,44 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
-
 @Entity
 public class Customer {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //specify customer attributes
     private int id;
-
-    @NotEmpty(message = "name cannot be empty.")
+    //add annotations to ensure value not null
+    //comes from validation package we added (in pom file)
+    @NotEmpty(message = "name must not be empty.")
     private String name;
-
     private String email;
 
-
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    //hash code to compare customer objects
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -60,45 +60,45 @@ public class Customer {
     }
 }
 
-//
+
+
 //@Entity
 //public class Customer {
-//
 //    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    //specify customer attributes
+//    @GeneratedValue(strategy = GenerationType.AUTO)
 //    private int id;
-//    //add annotations to ensure value not null
-//    //comes from validation package we added (in pom file)
-//    @NotEmpty(message = "name must not be empty.")
+//
+//    @NotEmpty(message = "name cannot be empty.")
 //    private String name;
+//
 //    private String email;
 //
+//
 //    public int getId() {
-//        return id;
+//        return this.id;
 //    }
 //
 //    public void setId(int id) {
 //        this.id = id;
 //    }
 //
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-//
 //    public String getName() {
-//        return name;
+//        return this.name;
 //    }
 //
 //    public void setName(String name) {
 //        this.name = name;
 //    }
 //
-//    //hash code to compare customer objects
+//    public String getEmail() {
+//        return this.email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//
 //    @Override
 //    public boolean equals(Object o) {
 //        if (o == this)
