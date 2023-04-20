@@ -5,15 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import edu.iu2.demo.model.Customer;
 import edu.iu2.demo.repository.CustomerRepository;
@@ -41,6 +33,7 @@ public class CustomerController {
 
     //Get localhost:8080/customers <-will execute following code
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Customer> findAll(){
         return repository.findAll();
     }
@@ -48,6 +41,7 @@ public class CustomerController {
     //find by ID added
     //map url to ID added to GetMapping argument
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Customer findByID(@PathVariable int id)
     {
         List<Customer> customers = repository.findAll();
