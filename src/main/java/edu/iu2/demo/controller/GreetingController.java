@@ -17,6 +17,6 @@ public class GreetingController {
     //add method to return greetings
     public String greeting()
     {
-        return "Greetings!";
+        return "Greetings from customer service!";
     }
 }
